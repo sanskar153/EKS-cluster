@@ -201,8 +201,8 @@ Before deploying this infrastructure, ensure you have the following:
 
 ### **Step 1: Clone and Navigate**
 ```bash
-git clone <repository-url>
-cd eks-terraform-bkp
+git clone https://github.com/sanskar153/EKS-cluster.git
+cd EKS-cluster
 ```
 
 ### **Step 2: Initialize Terraform**
