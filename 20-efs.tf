@@ -58,15 +58,22 @@ resource "helm_release" "efs_csi_driver" {
   namespace  = "kube-system"
   version    = "3.0.5"
 
-  set {
-    name  = "controller.serviceAccount.name"
-    value = "efs-csi-controller-sa"
-  }
+  set = [
+    {
+      name  = "controller.serviceAccount.name"
+      value = "efs-csi-controller-sa"
+    },
+    {
+      name  = "controller.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+      value = aws_iam_role.efs_csi_driver.arn
+    }
+  ]
 
-  set {
-    name  = "controller.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = aws_iam_role.efs_csi_driver.arn
-  }
+  depends_on = [
+    aws_efs_mount_target.zone_a,
+    aws_efs_mount_target.zone_b
+  ]
+}
 
   depends_on = [
     aws_efs_mount_target.zone_a,
